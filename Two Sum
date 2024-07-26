@@ -1,0 +1,50 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        // //BRUTEFORCE APPROACH TC=O(N^2) SC=O(N)
+        // vector<int> ans;
+        // for(int i=0;i<nums.size();i++){
+        //     for(int j=1;j<nums.size();j++){
+        //         if(nums[i]+nums[j]==target){
+        //             ans.push_back(i);
+        //             ans.push_back(j);
+        //             return ans;
+        //         }
+        //     }
+        // }
+        // return ans;
+
+        //BETTER APPROACH => TC=O(N) SC=O(N)
+    //     map<int,int> mpp;
+    //     int diff = 0, i = 0;
+    //     for(int i=0;i<nums.size();i++){
+    //         int a = nums[i];
+    //         diff = target - a;
+    //         if(mpp.find(diff) != mpp.end()){
+    //             return {mpp[diff],i};
+    //         }
+    //         mpp[a]=i;
+    //     }
+    // return {mpp[diff],i};
+
+    //TC=>O(N logN) SC=>O(N)
+    int n = nums.size();
+    vector<pair<int, int>> num_pairs;
+    for (int i = 0; i < n; i++) {
+        num_pairs.push_back({nums[i], i});
+    }
+    sort(num_pairs.begin(), num_pairs.end());
+    int left = 0, right = n - 1;
+    while (left < right) {
+        int sum = num_pairs[left].first + num_pairs[right].first;
+        if (sum < target) {
+            left++;
+        } else if (sum > target) {
+            right--;
+        } else {
+            return {num_pairs[left].second, num_pairs[right].second};
+        }
+    }
+    return {num_pairs[left].second, num_pairs[right].second};
+    }
+};
